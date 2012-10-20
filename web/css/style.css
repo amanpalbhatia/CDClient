@@ -1,0 +1,129 @@
+/* 
+    Document   : style
+    Created on : 30-Sep-2012, 10:53:14 AM
+    Author     : Aman
+    Description:
+       
+*/
+
+
+root { 
+    display: block;
+    
+}
+body {
+    font-family: Verdana, Helvetica, sans-serif;
+    width: 1050px;
+    text-align: center;
+    margin: 20px auto;
+}
+#main { background: #eee }
+
+#header {
+    height: 250px;
+    background: #aaa;
+}
+#logo {
+    height: 155px;
+    width: 155px;
+    float: left;
+    margin-left: 30px;
+    margin-top: -20px;
+}
+
+#logoText {
+    float: left;
+    margin: 20px 0 0 100px;
+    /*font styles apply to text within alt tags*/
+    font-family: 'American Typewriter', Courier, monospace;
+    font-size: 50px;
+    color: #333;
+}
+
+#widgetBar {
+    height: 50px;
+    width: 1050px;
+    float: right;
+    background: #ccc;
+}
+
+.headerWidget {
+    width: 194px;
+    margin: 20px 2px;
+    font-size: small;
+    float: right;
+    line-height: 25px;
+    background: #aaa;
+}
+
+#menu {
+    height: 100%;
+    background: #fff;
+}
+#footer {
+    height: 60px;
+    clear: left;
+    background: #aaa;
+}
+
+#indexLeftColumn {
+    height: 100%;
+    width: 300px;
+    float: left;
+    background: #ccc;
+}
+
+#indexRightColumn {
+    height: 100%;
+    width: 750px;
+    float: left;
+    background: #eee;
+
+}
+
+
+.categoryBox {
+    height: auto;
+    width: 212px;
+    margin: 21px 18px 6px;
+    background: #ccc;
+}
+.productBox {
+    height: 212px;
+    width: 212px;
+    margin: 21px 18px 6px;
+   background: #ccc;
+}
+.categoryLabelText {
+    line-height: 150%;
+    font-size: x-large;
+}
+
+ul,li#order {
+    list-style: none;
+    padding-bottom:10px;
+    padding-top:10px;
+    text-align: left;
+    
+}
+li.lowercase {
+    text-transform: lowercase;
+    
+}
+li.lowercase:first-letter {
+    text-transform: capitalize;
+    
+}
+li.bold {
+    font-weight: bold;
+}
+label.login{
+    font-weight: bold;
+    width: 500px;
+    text-align: right;
+}
+div.login{
+        display: block;
+        padding: 0 0 20px;
+        margin-bottom: 15px;
+}

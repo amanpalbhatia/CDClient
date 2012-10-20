@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><xs:schema xmlns:tns="http://prodcat.ws.server.etechies.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://prodcat.ws.server.etechies.com/">
+
+<xs:element name="getCategoryList" type="tns:getCategoryList" />
+
+<xs:element name="getCategoryListResponse" type="tns:getCategoryListResponse" />
+
+<xs:element name="getProductInfo" type="tns:getProductInfo" />
+
+<xs:element name="getProductInfoResponse" type="tns:getProductInfoResponse" />
+
+<xs:element name="getProductList" type="tns:getProductList" />
+
+<xs:element name="getProductListResponse" type="tns:getProductListResponse" />
+
+<xs:complexType name="getProductList">
+<xs:sequence>
+<xs:element name="categoryId" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductListResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:product" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="product">
+<xs:sequence>
+<xs:element name="category" type="xs:string" minOccurs="0" />
+<xs:element name="cdId" type="xs:string" minOccurs="0" />
+<xs:element name="price" type="xs:double" />
+<xs:element name="title" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductInfo">
+<xs:sequence>
+<xs:element name="productId" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductInfoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:product" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getCategoryList">
+<xs:sequence />
+</xs:complexType>
+
+<xs:complexType name="getCategoryListResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
