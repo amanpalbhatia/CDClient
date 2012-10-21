@@ -33,18 +33,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getProductInfo">
-<xs:sequence>
-<xs:element name="productId" type="xs:string" minOccurs="0" />
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getProductInfoResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:product" minOccurs="0" />
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="getCategoryList">
 <xs:sequence />
 </xs:complexType>
@@ -52,6 +40,18 @@
 <xs:complexType name="getCategoryListResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductInfo">
+<xs:sequence>
+<xs:element name="productId" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductInfoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:product" minOccurs="0" />
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

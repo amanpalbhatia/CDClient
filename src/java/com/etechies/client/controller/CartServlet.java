@@ -4,23 +4,22 @@
  */
 package com.etechies.client.controller;
 
-
-import com.etechies.server.ws.prodcat.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.etechies.client.controller.SessionController;
+import com.etechies.server.ws.prodcat.Product;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
-
 /**
  *
  * @author Aman
  */
-public class ProductsByCategory extends HttpServlet {
+public class CartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -34,28 +33,44 @@ public class ProductsByCategory extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        List <Product> cat = null;
-        String type=null;
+        HttpSession usession=null;
+        String cd=null;
+        String action=null;
+        String forward=null;
+        ArrayList<Product> cart= new ArrayList<Product>();
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         try {
-           
-            type=request.getParameter("category");
-            if(type=="all")
-            {
-            cat=ProductsByCategory.getProductList(null);
-        }
-            else{
-               cat=ProductsByCategory.getProductList(type); 
+           SessionController sc= new SessionController(request);
+           usession=sc.getSession(request);
+           cd=request.getParameter("cdId");
+           action=request.getParameter("action");
+            if (!cd.isEmpty()) {
+                if (action.equals("add")) {
+                    Product item = CartServlet.getProductInfo(cd);
+                    cart = sc.addToCart(item);
+                    forward="ProductsByCategory?category="+item.getCategory();
+                    String msg= "Item added to Cart : "+item.getTitle();
+                    request.setAttribute("cartmsg", msg);
+                } else {
+                   // out.println(sc.getCartItems().size());
+                    cart=sc.removeItemFromCart(cd);
+                    forward="/cart.jsp";
+                    request.setAttribute("cartmsg", "Item removed from cart");
+                }
             }
-          
-             request.setAttribute("prod", cat);
-             RequestDispatcher rd=request.getRequestDispatcher("/productsByCategory.jsp");
-             rd.forward(request, response);
-        } finally {            
-            
-         
+             else {
+                forward="/index.jsp";
+                request.setAttribute("msg", "Requested Action Cannot be performed");
+            }
+            RequestDispatcher rs= request.getRequestDispatcher(forward);
+            rs.forward(request, response);
+           
+           }
+           
+         finally {            
+            //out.close();
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -99,23 +114,9 @@ public class ProductsByCategory extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-
-
-//    private static java.util.List<com.etechies.server.ws.prodcat.Product> getProductList(java.lang.String categoryId) {
-//        com.etechies.server.ws.prodcat.ProductCatalogWebService_Service service = new com.etechies.server.ws.prodcat.ProductCatalogWebService_Service();
-//        com.etechies.server.ws.prodcat.ProductCatalogWebService port = service.getProductCatalogWebServicePort();
-//        return port.getProductList(categoryId);
-//    }
-
-    private static java.util.List<com.etechies.server.ws.prodcat.Product> getProductList(java.lang.String categoryId) {
+    private static Product getProductInfo(java.lang.String productId) {
         com.etechies.server.ws.prodcat.ProductCatalogWebService_Service service = new com.etechies.server.ws.prodcat.ProductCatalogWebService_Service();
         com.etechies.server.ws.prodcat.ProductCatalogWebService port = service.getProductCatalogWebServicePort();
-        return port.getProductList(categoryId);
+        return port.getProductInfo(productId);
     }
-
-  
-    
-    
-
- 
 }

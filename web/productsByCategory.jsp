@@ -16,23 +16,30 @@
     <body>
         <div id="main">
 
-            <div id="header">
-                <div id="widgetBar">
-                    <div class="headerWidget">
-                        [ language toggle ]
+               <div id="header">
+                  <div id="widgetBar">
+                        <div class="headerWidget">
+                            [ Sign Out ]
+                        </div>
+                        
+
+                        <div class="headerWidget">
+                            <a href="cart.jsp" >[ View cart ]</a>
+                        </div>
+                        
+                        <div class="headerWidget">
+                            <c:choose>
+                                <c:when test="${sessionScope.USERINFO == null}">
+                            [ login ]
+                                </c:when>
+                            <c:otherwise>
+                                [ Hi, <c:out value="${sessionScope.USERINFO.fname}"/>]
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        
+
                     </div>
-
-
-                    <div class="headerWidget">
-                        [ items in cart ]
-                    </div>
-
-                    <div class="headerWidget">
-                        [ login or Hi, user]
-                    </div>
-
-
-                </div>
 
                 <a href="#">
                     <img src="images/logo.png" id="logo" alt="Store Logo">
@@ -80,12 +87,16 @@
 
 
             <div id="indexRightColumn">
+                <c:out value="${cartmsg}" />
+                    
                 <h2>Results  </h2>
                 <c:forEach items="${prod}" var="temp">
                     <div class="categoryBox"> 
 
                         <span class="categoryLabelText"> ${temp.title} </span>
-                        </br> ${temp.price} </br>[add to cart button]
+                        </br> ${temp.price} </br>
+                        
+                        <span>  <a href='AddToCart?action=add&cdId=<c:out value="${temp.cdId}"> </c:out>'>[add to cart button]</a></span>
                         </br> 
                     </div>
                 </c:forEach>

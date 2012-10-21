@@ -4,6 +4,12 @@
 <xsd:import namespace="http://prodcat.ws.server.etechies.com/" schemaLocation="http://localhost:8080/CDShopServer/ProductCatalogWebService?xsd=1" />
 </xsd:schema>
 </types>
+<message name="getProductInfo">
+<part name="parameters" element="tns:getProductInfo" />
+</message>
+<message name="getProductInfoResponse">
+<part name="parameters" element="tns:getProductInfoResponse" />
+</message>
 <message name="getCategoryList">
 <part name="parameters" element="tns:getCategoryList" />
 </message>
@@ -16,13 +22,11 @@
 <message name="getProductListResponse">
 <part name="parameters" element="tns:getProductListResponse" />
 </message>
-<message name="getProductInfo">
-<part name="parameters" element="tns:getProductInfo" />
-</message>
-<message name="getProductInfoResponse">
-<part name="parameters" element="tns:getProductInfoResponse" />
-</message>
 <portType name="ProductCatalogWebService">
+<operation name="getProductInfo">
+<input wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductInfoRequest" message="tns:getProductInfo" />
+<output wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductInfoResponse" message="tns:getProductInfoResponse" />
+</operation>
 <operation name="getCategoryList">
 <input wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getCategoryListRequest" message="tns:getCategoryList" />
 <output wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getCategoryListResponse" message="tns:getCategoryListResponse" />
@@ -31,13 +35,18 @@
 <input wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductListRequest" message="tns:getProductList" />
 <output wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductListResponse" message="tns:getProductListResponse" />
 </operation>
-<operation name="getProductInfo">
-<input wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductInfoRequest" message="tns:getProductInfo" />
-<output wsam:Action="http://prodcat.ws.server.etechies.com/ProductCatalogWebService/getProductInfoResponse" message="tns:getProductInfoResponse" />
-</operation>
 </portType>
 <binding name="ProductCatalogWebServicePortBinding" type="tns:ProductCatalogWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+<operation name="getProductInfo">
+<soap:operation soapAction="" />
+<input>
+<soap:body use="literal" />
+</input>
+<output>
+<soap:body use="literal" />
+</output>
+</operation>
 <operation name="getCategoryList">
 <soap:operation soapAction="" />
 <input>
@@ -48,15 +57,6 @@
 </output>
 </operation>
 <operation name="getProductList">
-<soap:operation soapAction="" />
-<input>
-<soap:body use="literal" />
-</input>
-<output>
-<soap:body use="literal" />
-</output>
-</operation>
-<operation name="getProductInfo">
 <soap:operation soapAction="" />
 <input>
 <soap:body use="literal" />

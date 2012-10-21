@@ -1,12 +1,11 @@
 <%-- 
-    Document   : login
-    Created on : Oct 19, 2012, 8:22:39 PM
+    Document   : index
+    Created on : Oct 19, 2012, 5:57:25 PM
     Author     : Aman
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,26 +14,28 @@
         <title>e-Techies CD Store</title>
     </head>
     <body>
-        
-        
-        <% 
-        %>
-        
-        <div id="main">
+ <div id="main">
             
-            <div id="header">
+               <div id="header">
                   <div id="widgetBar">
                         <div class="headerWidget">
-                            [ language toggle ]
+                            [ Sign Out ]
                         </div>
                         
 
                         <div class="headerWidget">
-                            [ items in cart ]
+                            <a href="cart.jsp" >[ View cart ]</a>
                         </div>
                         
                         <div class="headerWidget">
-                            [ login or Hi, user]
+                            <c:choose>
+                                <c:when test="${sessionScope.USERINFO == null}">
+                            [ login ]
+                                </c:when>
+                            <c:otherwise>
+                                [ Hi, <c:out value="${sessionScope.USERINFO.fname}"/>]
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         
 
@@ -54,6 +55,7 @@
             <div id="menu">
                 [placeholder]
             </div>
+            <!-- Start of content left and right column-->
             <div id="indexLeftColumn">
 				<p>PRODUCTS BY:</p>
 				<ul id="order">
@@ -80,23 +82,6 @@
                                                         </span>
                                                        
 						</li>
-                                                </div>
-
-
-			<div id="indexRightColumn">
-				<h2>Log-in </h2>
-            <div class="loginBox">
-            <!-- Start of content left and right column-->
-            <label class="categoryLabelText"><c:out value="${loginmsg}" /></label>
-            <label class="categoryLabelText"><c:out value="${chkoutmsg}" /></label>
-            
-            <form method="post" action="UserServlet" id="loginform">
-                
-                <label class="categoryLabelText"> User Name: </label><input type="text" class="inputbox" name="username" /><br>
-                <label class="categoryLabelText">Password: </label> <input type="password" class="inputbox" name="password" /><br>
-               <input type="submit" value="log in" />
-            </form>
-            </div>
 
 
 					<!--<li class="bold">Category</li>
@@ -123,17 +108,34 @@
 				</ul>
 
 				<!--[Placeholder]-->
-			
+			</div>
 
-</div>
-		
+
+			<div id="indexRightColumn">
+				<h2>Cart</h2>
+
+						<c:forEach items="${sessionScope.CARTITEMS}" var="temp">
+                    <div class="categoryBox"> 
+
+                        <span class="categoryLabelText"> ${temp.title} </span>
+                        </br> ${temp.price} </br>
+                        
+                        <span>  <a href='AddToCart?action=remove&cdId=<c:out value="${temp.cdId}"> </c:out>'>[Remove from cart button]</a></span>
+                        </br> 
+                    </div>
+                </c:forEach>
+
+
+			</div>
+            <c:out value="${sessionScope.USERINFO.uname}" />
+                        
+                                                
                         <!-- End of content left and right column-->
 			<div id="footer">
                             <hr>
                             <p id="footerText">[ footer text ]</p>
 			</div>
-        </div>
-        
-		
+		</div>
     </body>
 </html>
+

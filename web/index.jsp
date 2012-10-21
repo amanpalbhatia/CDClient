@@ -19,16 +19,26 @@
             <div id="header">
                   <div id="widgetBar">
                         <div class="headerWidget">
-                            [ language toggle ]
+                            [ Sign Out ]
                         </div>
                         
 
                         <div class="headerWidget">
-                            [ items in cart ]
+                            <a href="cart.jsp" >[ View cart ]</a>
+                        </div>
+                      <div class="headerWidget">
+                            <a href="OrderServlet" >[ Check Out ]</a>
                         </div>
                         
                         <div class="headerWidget">
-                            [ login or Hi, user]
+                            <c:choose>
+                                <c:when test="${sessionScope.USERINFO == null}">
+                            [ login ]
+                                </c:when>
+                            <c:otherwise>
+                                [ Hi, <c:out value="${sessionScope.USERINFO.fname}"/>]
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         
 
@@ -114,7 +124,8 @@
 
 
 			</div>
-                        <c:out value="${prod.cdId}"></c:out>
+            <c:out value="${sessionScope.USERINFO.uname}" />
+                        
                                                 <form action="SessionController" >
            Name: <input type="text" name="class"/> 
            <input type="submit">

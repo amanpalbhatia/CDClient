@@ -42,5 +42,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/com/etechies/server/ws/prodcat"/>
         <delete dir="${build.generated.dir}/jax-wsCache/ProductCatalogWebService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-ProductCatalogWebService"/>
+    <target name="wsimport-client-OrderProcessWebService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/OrderProcessWebService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/OrderProcessWebService" destdir="${build.generated.dir}/jax-wsCache/OrderProcessWebService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/CDShopServer/OrderProcessWebService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/OrderProcessWebService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/OrderProcessWebService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-OrderProcessWebService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/etechies/server/ws/orderproc"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/OrderProcessWebService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-ProductCatalogWebService, wsimport-client-OrderProcessWebService"/>
 </project>

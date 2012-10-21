@@ -4,15 +4,17 @@
  */
 package com.etechies.client.controller;
 
+import com.etechies.server.ws.orderproc.Account;
 import com.etechies.server.ws.prodcat.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -31,16 +33,112 @@ public class SessionController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-  
+    HttpServletRequest pageRequest = null;
+    HttpSession session = null;
+    String USERINFO="USERINFO";
+    String CARTITEMS="CARTITEMS";
+
+    public SessionController(HttpServletRequest httpRequest) {
+        this.pageRequest = httpRequest;
+        session = httpRequest.getSession();
+    }
+
+    public HttpSession getSession(HttpServletRequest httpRequest) {
+        if (session == null) {
+            session = httpRequest.getSession();
+        }
+        return session;
+    }
+
+    public void setLoggedUser(Account userInfo) {
+        session.setAttribute(USERINFO, userInfo);
+    }
+
+    public Account getLoggedUser() {
+        //getSession();
+        return (Account) session.getAttribute(USERINFO);
+    }
+
+    public boolean isUserLoggedIn() {
+        Account loggedUser = null;
+        boolean exception = false;
+        if (session != null) {
+            try {
+                loggedUser = (Account) session.getAttribute(USERINFO);
+            } catch (Exception ex) {
+                exception = true;
+                ex.printStackTrace();
+            }
+            if (loggedUser == null || exception == true) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+    public ArrayList<Product> setCartItems(ArrayList<Product> cartItems) {
+        session.setAttribute(CARTITEMS, cartItems);
+        return getCartItems();
+    }
+
+    public ArrayList<Product> getCartItems() {
+        ArrayList<Product> cartItems = (ArrayList<Product>) session.getAttribute(CARTITEMS);
+        return cartItems;
+    }
+
+    public ArrayList<Product> addToCart(Product newItem) {
+        ArrayList<Product> currentCart = getCartItems();
+        if (currentCart == null) {
+            currentCart = new ArrayList<Product>();
+        }
+        currentCart.add(newItem);
+        setCartItems(currentCart);
+
+        currentCart = getCartItems();
+        return currentCart;
+    }
+//
+//    public ArrayList<Product> removeItemFromCart(Product itemToRemove) {
+//        String searchItemId = itemToRemove.getCdId();
+//
+//        ArrayList<Product> currentCart = removeItemFromCart(searchItemId);
+//
+//        return currentCart;
+//    }
+//
+    public ArrayList<Product> removeItemFromCart(String itemId) {
+        ArrayList<Product> currentCart = getCartItems();
+
+        if (currentCart == null) {
+            currentCart = new ArrayList<Product>();
+            return currentCart;
+        }
+
+        int indexToDelete =-1;
+        for (int i = 0; i < currentCart.size(); i++) {
+            if (currentCart.get(i).getCdId().equals(itemId)) {
+                indexToDelete=i;
+                break;
+            }
+        }
+        currentCart.remove(indexToDelete);
+        setCartItems(currentCart);
+        
+        return currentCart;
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8");
 //        PrintWriter out = response.getWriter();
+        
         try {
-          
-       
-             Product cat=SessionController.getProductList("pop").get(1);
+          HttpSession usersession = getSession(request);
+         // setLoggedUser();
+       Account cat = SessionController.getAccountInfo("abhat");
+             //Product cat=SessionController.getProductList("pop").get(1);
              request.setAttribute("prod", cat);
              RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");
              rd.forward(request, response);
@@ -101,5 +199,11 @@ public class SessionController extends HttpServlet {
         com.etechies.server.ws.prodcat.ProductCatalogWebService_Service service = new com.etechies.server.ws.prodcat.ProductCatalogWebService_Service();
         com.etechies.server.ws.prodcat.ProductCatalogWebService port = service.getProductCatalogWebServicePort();
         return port.getProductList(categoryId);
+    }
+
+    private static Account getAccountInfo(java.lang.String uname) {
+        com.etechies.server.ws.orderproc.OrderProcessWebService_Service service = new com.etechies.server.ws.orderproc.OrderProcessWebService_Service();
+        com.etechies.server.ws.orderproc.OrderProcessWebService port = service.getOrderProcessWebServicePort();
+        return port.getAccountInfo(uname);
     }
 }

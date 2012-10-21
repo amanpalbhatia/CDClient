@@ -6,7 +6,19 @@
     </servlet>
     <servlet>
         <servlet-name>ProductsByCategory</servlet-name>
-        <servlet-class>com.etechies.client.controller.ProductsByCategory</servlet-class>
+        <servlet-class>com.etechies.client.controller.ProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.etechies.client.controller.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToCart</servlet-name>
+        <servlet-class>com.etechies.client.controller.CartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.etechies.client.controller.OrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SessionController</servlet-name>
@@ -16,10 +28,25 @@
         <servlet-name>ProductsByCategory</servlet-name>
         <url-pattern>/ProductsByCategory</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCart</servlet-name>
+        <url-pattern>/AddToCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/OrderServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-   
+    <init-param>
+        <param-name>foo</param-name>
+        <param-value>bar</param-value>
+    </init-param>
 </web-app>
