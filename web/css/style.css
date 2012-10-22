@@ -88,6 +88,12 @@ body {
     margin: 21px 18px 6px;
     background: #ccc;
 }
+.orderBox {
+    height: auto;
+    width: auto;
+    margin: 21px 18px 6px;
+    background: #ccc;
+}
 
 .productBox {
     height: auto;

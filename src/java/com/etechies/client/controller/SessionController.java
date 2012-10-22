@@ -5,6 +5,7 @@
 package com.etechies.client.controller;
 
 import com.etechies.server.ws.orderproc.Account;
+import com.etechies.server.ws.orderproc.POrder;
 import com.etechies.server.ws.prodcat.Product;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,10 +38,15 @@ public class SessionController extends HttpServlet {
     HttpSession session = null;
     String USERINFO="USERINFO";
     String CARTITEMS="CARTITEMS";
+    String ORDERLIST="ORDERLIST";
+    String ORDERINFO="ORDERINFO";
+    String ORDERNO="ORDERNO";
+    String ORDERTOTAL="ORDERTOTAL";
 
     public SessionController(HttpServletRequest httpRequest) {
         this.pageRequest = httpRequest;
         session = httpRequest.getSession();
+        
     }
 
     public HttpSession getSession(HttpServletRequest httpRequest) {
@@ -99,6 +105,9 @@ public class SessionController extends HttpServlet {
         currentCart = getCartItems();
         return currentCart;
     }
+    public void emptyCart(){
+        session.setAttribute(CARTITEMS, null);
+    }
 //
 //    public ArrayList<Product> removeItemFromCart(Product itemToRemove) {
 //        String searchItemId = itemToRemove.getCdId();
@@ -128,7 +137,16 @@ public class SessionController extends HttpServlet {
         
         return currentCart;
     }
+public void setOrder(POrder order)
+{
+    session.setAttribute(ORDERINFO, order);
+    
+}
 
+public POrder getOrder()
+{
+     return (POrder)session.getAttribute(ORDERINFO);
+}
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8");
@@ -146,6 +164,41 @@ public class SessionController extends HttpServlet {
             
             //out.close();
         }
+    }
+    public void setOrderNo(int count){
+        session.setAttribute(ORDERNO, count);
+    }
+    public int getOrderNo(){
+        if(session.getAttribute(ORDERNO)==null) {
+            return 0;
+        }
+        return (Integer) session.getAttribute(ORDERNO);
+    }
+    public void setOrderTotal(float amt){
+        session.setAttribute(ORDERTOTAL, amt);
+    }
+    public Float getOrderTotal(){
+        return (Float) session.getAttribute(ORDERTOTAL);
+    }
+    
+    public void setOrderList(ArrayList<POrder> ord){
+        session.setAttribute(ORDERLIST, ord);
+            }
+    public ArrayList<POrder> getOrderList()
+    {
+        return (ArrayList<POrder>) session.getAttribute(ORDERLIST);
+    }
+    
+    public ArrayList<POrder> addToOrderList(POrder order){
+         ArrayList<POrder> currentOrderList = getOrderList();
+        if (currentOrderList == null) {
+            currentOrderList = new ArrayList<POrder>();
+        }
+        currentOrderList.add(order);
+        setOrderList(currentOrderList);
+
+        currentOrderList = getOrderList();
+        return currentOrderList;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

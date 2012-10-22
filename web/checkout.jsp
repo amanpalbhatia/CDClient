@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Oct 19, 2012, 5:57:25 PM
+    Document   : checkout
+    Created on : Oct 21, 2012, 2:10:11 PM
     Author     : Aman
 --%>
 
@@ -18,11 +18,8 @@
             
             <div id="header">
                   <div id="widgetBar">
-                      <div class="headerWidget">
-                            [ Sign Out ]
-                        </div>
                         <div class="headerWidget">
-                            <a href="register.jsp">[ Register ]</a>
+                            [ Sign Out ]
                         </div>
                         
 
@@ -118,30 +115,83 @@
 
 
 			<div id="indexRightColumn">
-				<h2>Welcome!!!</h2>
-                                <span class="categoryLabelText"> <c:out value="${registermsg}" /></span>
-<label class="categoryLabelText"><c:out value="${chkoutmsg}" /></label>
- <label class="categoryLabelText"> <c:out value="${confirmOrderMsg}" /></label>
-						<div class="categoryBox"> 
-                                                    
-							<span class="categoryLabelText"> Title of CD </span>
-							</br> Price </br>[add to cart button]
-						</div>
+				<h2>Check Out - Order</h2>
+                              <label class="categoryLabelText"> <c:out value="${confirmOrderMsg}" /></label>
+
+		<div class="orderBox"> 
+
+                        <span class="categoryLabelText"> ORDER ID </span>
+                        <span class="categoryLabelText"> USER ID </span>
+                        <span class="categoryLabelText"> STATUS </span>
+                        <span class="categoryLabelText"> TOTAL </span>
+		
+                         </br>
+                       </div>
+                <div class="orderBox"> 
+                    <c:forEach items="${sessionScope.ORDERLIST}" var="temp">
+                    <span class="categoryLabelText"> ${temp.orderId}</span>
+                        <span class="categoryLabelText">${temp.userId}</span>
+                        <span class="categoryLabelText">${temp.status} </span>
+                                                </br>
+
+                       </c:forEach>
+                      </div>        </br>
+                      Provide payment: </br>
+                      OrderId : <span class="categoryLabelText"><c:out value=" ${sessionScope.ORDERINFO.orderId}"/></span></br>
+                      Items : <c:forEach items="${sessionScope.CARTITEMS}" var="temp">
+                          <span class="categoryLabelText"> ${temp.title}</span>
+                        <span class="categoryLabelText">${temp.category}</span>
+                        <span class="categoryLabelText">${temp.price} </span>
+                        </br>
+                      </c:forEach>
+                        </br>
+                      
+                        Total : <c:out value="${sessionScope.ORDERTOTAL}"/>
+                        </br>
+                      <form name="confirmOrder" action="OrderServlet">
+                          <label>Card Number:</label>  <input type="text" name="cardNumber"/></br>
+                          <label>Card Type:</label>  <select>
+  <option value="visa">VISA</option>
+  <option value="mc">Master Card</option>
+  <option value="debit">INTERAC</option>
+  </select></br>
+                                         <label>Expiry : </label> <label>Year:</label> <select>
+  <option value="12">2012</option>
+  <option value="13">2013</option>
+  <option value="14">2014</option>
+  </select>
+                                         <label>Month:</label> <select>
+  <option value="1">JAN</option>
+  <option value="2">FEB</option>
+  <option value="3">MAR</option>
+  <option value="1">APR</option>
+  <option value="2">MAY</option>
+  <option value="3">JUN</option>
+  <option value="1">JUL</option>
+  <option value="2">AUG</option>
+  <option value="3">SEP</option>
+  <option value="1">OCT</option>
+  <option value="2">NOV</option>
+  <option value="3">DEC</option>
+  
+  </select>
+                                         <input type="hidden" name="fldConfrmOrder" value="confirmOrder">
+                                         </br>  <input type="submit" value="Confirm Order">        
+                      </form>
+                      </div>
+                
 
 
-			</div>
-            <c:out value="${sessionScope.USERINFO.uname}" />
+            </div>
+
+
+			
                         
-                                                <form action="SessionController" >
-           Name: <input type="text" name="class"/> 
-           <input type="submit">
-        </form>
-                        <!-- End of content left and right column-->
+                   <!-- End of content left and right column-->
 			<div id="footer">
                             <hr>
                             <p id="footerText">[ footer text ]</p>
 			</div>
-		</div>
-    </body>
+		   </body>
 </html>
 

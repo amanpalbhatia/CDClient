@@ -44,40 +44,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="createOrder">
-<xs:sequence>
-<xs:element name="userId" type="xs:int" />
-<xs:element name="cart" type="tns:shoppingCart" minOccurs="0" />
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="shoppingCart">
-<xs:sequence />
-</xs:complexType>
-
-<xs:complexType name="createOrderResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:pOrder" minOccurs="0" />
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="pOrder">
-<xs:sequence>
-<xs:element name="orderId" type="xs:int" />
-<xs:element name="orderItems" type="tns:pOrderItems" nillable="true" minOccurs="0" maxOccurs="unbounded" />
-<xs:element name="status" type="xs:string" minOccurs="0" />
-<xs:element name="userId" type="xs:int" />
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="pOrderItems">
-<xs:sequence>
-<xs:element name="cdId" type="xs:string" minOccurs="0" />
-<xs:element name="poId" type="xs:int" />
-<xs:element name="price" type="xs:double" minOccurs="0" />
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="getAccountInfo">
 <xs:sequence>
 <xs:element name="uname" type="xs:string" minOccurs="0" />
@@ -102,6 +68,45 @@
 <xs:element name="upassword" type="xs:string" minOccurs="0" />
 <xs:element name="userId" type="xs:int" />
 <xs:element name="zip" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createOrder">
+<xs:sequence>
+<xs:element name="userId" type="xs:int" />
+<xs:element name="cart" type="tns:product" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="product">
+<xs:sequence>
+<xs:element name="category" type="xs:string" minOccurs="0" />
+<xs:element name="cdId" type="xs:string" minOccurs="0" />
+<xs:element name="price" type="xs:double" />
+<xs:element name="title" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createOrderResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:pOrder" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pOrder">
+<xs:sequence>
+<xs:element name="orderId" type="xs:int" />
+<xs:element name="orderItems" type="tns:pOrderItems" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="status" type="xs:string" minOccurs="0" />
+<xs:element name="userId" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pOrderItems">
+<xs:sequence>
+<xs:element name="cdId" type="xs:string" minOccurs="0" />
+<xs:element name="poId" type="xs:int" />
+<xs:element name="price" type="xs:double" minOccurs="0" />
 </xs:sequence>
 </xs:complexType>
 

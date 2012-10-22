@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:8080/CDShopServer/OrderProcessWebService?wsdl" uri="src/conf/xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.wsdl"/>
-    <system systemId="http://localhost:8080/CDShopServer/OrderProcessWebService?xsd=1" uri="src/conf/xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/CDShopServer/ProductCatalogWebService?wsdl" uri="src/conf/xml-resources/web-service-references/ProductCatalogWebService/wsdl/localhost_8080/CDShopServer/ProductCatalogWebService.wsdl"/>
     <system systemId="http://localhost:8080/CDShopServer/ProductCatalogWebService?xsd=1" uri="src/conf/xml-resources/web-service-references/ProductCatalogWebService/wsdl/localhost_8080/CDShopServer/ProductCatalogWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/CDShopServer/OrderProcessWebService?wsdl" uri="src/conf/xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.wsdl"/>
+    <system systemId="http://localhost:8080/CDShopServer/OrderProcessWebService?xsd=1" uri="src/conf/xml-resources/web-service-references/OrderProcessWebService/wsdl/localhost_8080/CDShopServer/OrderProcessWebService.xsd_1.xsd"/>
 </catalog>

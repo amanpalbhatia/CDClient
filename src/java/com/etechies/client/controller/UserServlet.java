@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.etechies.client.controller.SessionController;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 /**
  *
@@ -34,12 +35,38 @@ public class UserServlet extends HttpServlet {
     String uname=null;
     String upwd=null;
     String  forward=null;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         try {
             SessionController sc=new SessionController(request);
+            String registermsg=null;
             /* TODO output your page here. You may use following sample code. */
+            if(request.getParameter("register")!=null){
+                String uname=request.getParameter("uname");
+               // out.println(uname);
+                String upwd=request.getParameter("pwd");
+                String ufname=request.getParameter("fname");
+                String ulname=request.getParameter("lname");
+                String ustreet=request.getParameter("street");
+                String uprovince=request.getParameter("province");
+                String ucountry=request.getParameter("country");
+                String uzip=request.getParameter("zip");
+                String uphone=request.getParameter("phone");
+                
+           registermsg = UserServlet.createAccount(uname, upwd, ulname,ufname, ustreet, uprovince, ucountry, uzip, uphone);
+          out.println(registermsg);
+           if (registermsg.equals("Account succesfully created")){
+                forward="index.jsp";
+            }
+            else{forward="register.jsp";
+            }
+//            RequestDispatcher rd = request.getRequestDispatcher(forward);
+//            rd.forward(request,response);
+            }
+            else{
             usession=sc.getSession(request);
             uname=request.getParameter("username");
             if (!uname.isEmpty())
@@ -66,6 +93,7 @@ public class UserServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(forward);
             rd.forward(request,response);
           //setLoggedUser();
+            }
         } finally {            
             //out.close();
         }
@@ -116,5 +144,11 @@ public class UserServlet extends HttpServlet {
         com.etechies.server.ws.orderproc.OrderProcessWebService_Service service = new com.etechies.server.ws.orderproc.OrderProcessWebService_Service();
         com.etechies.server.ws.orderproc.OrderProcessWebService port = service.getOrderProcessWebServicePort();
         return port.getAccountInfo(uname);
+    }
+
+    private static String createAccount(java.lang.String uname, java.lang.String upassword, java.lang.String fname, java.lang.String lname, java.lang.String street, java.lang.String province, java.lang.String zip, java.lang.String country, java.lang.String phone) {
+        com.etechies.server.ws.orderproc.OrderProcessWebService_Service service = new com.etechies.server.ws.orderproc.OrderProcessWebService_Service();
+        com.etechies.server.ws.orderproc.OrderProcessWebService port = service.getOrderProcessWebServicePort();
+        return port.createAccount(uname, upassword, fname, lname, street, province, zip, country, phone);
     }
 }
