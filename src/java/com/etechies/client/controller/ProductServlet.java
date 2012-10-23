@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Aman
  */
+//This class is used to display Products(CD) based on the Category.
 public class ProductServlet extends HttpServlet {
 
     /**

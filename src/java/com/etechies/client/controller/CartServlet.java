@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Aman
  */
+
+//This Class is invloved in all the activites related to Shopping Cart.
 public class CartServlet extends HttpServlet {
 
     /**
@@ -45,19 +47,24 @@ public class CartServlet extends HttpServlet {
            usession=sc.getSession(request);
            cd=request.getParameter("cdId");
            action=request.getParameter("action");
+           //Add item to cart start
             if (!cd.isEmpty()) {
+                //Add item to cart -- start
                 if (action.equals("add")) {
                     Product item = CartServlet.getProductInfo(cd);
                     cart = sc.addToCart(item);
                     forward="ProductsByCategory?category="+item.getCategory();
                     String msg= "Item added to Cart : "+item.getTitle();
                     request.setAttribute("cartmsg", msg);
-                } else {
+                } 
+                //Add item to cart -- End
+                //Remove item from cart -- start
+                else {
                    // out.println(sc.getCartItems().size());
                     cart=sc.removeItemFromCart(cd);
                     forward="/cart.jsp";
                     request.setAttribute("cartmsg", "Item removed from cart");
-                }
+                }//Remove item from cart -- End
             }
              else {
                 forward="/index.jsp";

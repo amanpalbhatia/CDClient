@@ -18,6 +18,7 @@ import javax.servlet.RequestDispatcher;
  *
  * @author Aman
  */
+//This Class is used to register new User and Authenticating the existing user.
 public class UserServlet extends HttpServlet {
 
     /**
@@ -44,7 +45,7 @@ public class UserServlet extends HttpServlet {
             SessionController sc=new SessionController(request);
             String registermsg=null;
             /* TODO output your page here. You may use following sample code. */
-            if(request.getParameter("register")!=null){
+            if(request.getParameter("register")!=null){//Register new User
                 String uname=request.getParameter("uname");
                // out.println(uname);
                 String upwd=request.getParameter("pwd");
@@ -66,7 +67,7 @@ public class UserServlet extends HttpServlet {
 //            RequestDispatcher rd = request.getRequestDispatcher(forward);
 //            rd.forward(request,response);
             }
-            else{
+            else{//Authenticating existing User (Log in)
             usession=sc.getSession(request);
             uname=request.getParameter("username");
             if (!uname.isEmpty())

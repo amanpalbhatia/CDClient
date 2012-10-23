@@ -9,7 +9,6 @@ import com.etechies.server.ws.orderproc.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Aman
  */
+//This class handles all the activities related to Order.
 public class OrderServlet extends HttpServlet {
 
     /**
@@ -43,14 +43,15 @@ public class OrderServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             SessionController sc = new SessionController(request);
+            //Confirm order -- start
             if (request.getParameter("fldConfrmOrder") != null) {
-                if (sc.getOrderNo()==5){
+                if (sc.getOrderNo()==5){//checks if it is more than fifth order in a session.
                     forward = "index.jsp";
                     request.setAttribute("confirmOrderMsg", "Purchase limit exceeded");
                     RequestDispatcher rd = request.getRequestDispatcher(forward);
                 rd.forward(request, response);
                 }
-                else{
+                else{//It less than fifth order in a session
                 if (request.getParameter("cardNumber") != null) {
                     boolean confirmed = false;
                     ArrayList<POrder> ol = sc.getOrderList();
@@ -58,26 +59,26 @@ public class OrderServlet extends HttpServlet {
                         int poid = ol.get(ol.size() - 1).getOrderId();
                         confirmed = OrderServlet.confirmOrder(poid, true);
                     }
-                    if (confirmed) {
+                    if (confirmed) {//order is approved
                         int i = 0;
                         i = sc.getOrderNo();
                         i++;
                         sc.setOrderNo(i);
                         sc.emptyCart();
                         request.setAttribute("confirmOrderMsg", "Order Confirmed!");
-                    } else {
+                    } else {//order is not processed
                         request.setAttribute("confirmOrderMsg", "Order cannot be completed!");
                     }
                     forward = "index.jsp";
                     //request.setAttribute("confirmOrderMsg", "Enter your Credit Card Details");
-                } else {
+                } else {//Missing Credit card Info
                     forward = "checkout.jsp";
                     request.setAttribute("confirmOrderMsg", "Enter your Credit Card Details");
                 }
                 RequestDispatcher rd = request.getRequestDispatcher(forward);
                 rd.forward(request, response);}
-            }
-
+            }//Confirm order -- End
+            //Create order -- start
             else{
 
             if (sc.isUserLoggedIn()) {
@@ -86,7 +87,7 @@ public class OrderServlet extends HttpServlet {
 
                 int uid = sc.getLoggedUser().getUserId();
                 // out.println(prodCart.size());
-                if (prodCart != null) {
+                if (prodCart != null) {//atleast 1 item is in Shopping Cart.
 
                     float total = 0;
 
@@ -122,20 +123,20 @@ public class OrderServlet extends HttpServlet {
                     request.setAttribute("chkoutmsg", "Confirm order to complete process.");
 
                     forward = "/checkout.jsp";
-                } else {
+                } else {//no items in Shopping Cart
                     //out.println("size1:");
                     request.setAttribute("chkoutmsg", "Select Items before you Check Out");
                     forward = "/index.jsp";
                 }
 
 
-            } else {
+            } else {//User Not loggedin
 
                 // out.println("size2:");
                 forward = "/login.jsp";
                 request.setAttribute("chkoutmsg", "Login before you Check Out");
 
-            }
+            }//Create order -- End
             RequestDispatcher rd = request.getRequestDispatcher(forward);
             rd.forward(request, response);
 

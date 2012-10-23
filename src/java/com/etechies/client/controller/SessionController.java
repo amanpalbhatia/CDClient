@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionController extends HttpServlet {
     
-
+//This is the central class that provides functions for all the activities related to User, Order and Product.
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -42,29 +42,29 @@ public class SessionController extends HttpServlet {
     String ORDERINFO="ORDERINFO";
     String ORDERNO="ORDERNO";
     String ORDERTOTAL="ORDERTOTAL";
-
+//This method initiates a Session.
     public SessionController(HttpServletRequest httpRequest) {
         this.pageRequest = httpRequest;
         session = httpRequest.getSession();
         
     }
-
+//This method returns the Session associated with a request.
     public HttpSession getSession(HttpServletRequest httpRequest) {
         if (session == null) {
             session = httpRequest.getSession();
         }
         return session;
     }
-
+//This method adds Information(like First Name, Last Name, UserId etc) of a Loggedin (authenticated) user to current Session.
     public void setLoggedUser(Account userInfo) {
         session.setAttribute(USERINFO, userInfo);
     }
-
+//This method returns information (like First Name, Last Name, UserId etc) of a Loggedin (authenticated) user from Session. 
     public Account getLoggedUser() {
         //getSession();
         return (Account) session.getAttribute(USERINFO);
     }
-
+// Returns true if a user is Loggedin(authenticated) else False.
     public boolean isUserLoggedIn() {
         Account loggedUser = null;
         boolean exception = false;
@@ -84,16 +84,17 @@ public class SessionController extends HttpServlet {
             return false;
         }
     }
+    //Adds Items Shopping Cart to current Session.
     public ArrayList<Product> setCartItems(ArrayList<Product> cartItems) {
         session.setAttribute(CARTITEMS, cartItems);
         return getCartItems();
     }
-
+// Returns list of Items(Product) in the Shopping Cart.
     public ArrayList<Product> getCartItems() {
         ArrayList<Product> cartItems = (ArrayList<Product>) session.getAttribute(CARTITEMS);
         return cartItems;
     }
-
+// Adds a new selected Item to Shopping Cart.
     public ArrayList<Product> addToCart(Product newItem) {
         ArrayList<Product> currentCart = getCartItems();
         if (currentCart == null) {
@@ -105,6 +106,7 @@ public class SessionController extends HttpServlet {
         currentCart = getCartItems();
         return currentCart;
     }
+    //Removes all teh items from Shopping Cart.
     public void emptyCart(){
         session.setAttribute(CARTITEMS, null);
     }
@@ -117,6 +119,7 @@ public class SessionController extends HttpServlet {
 //        return currentCart;
 //    }
 //
+    //Removes selected item from the Shopping Cart.
     public ArrayList<Product> removeItemFromCart(String itemId) {
         ArrayList<Product> currentCart = getCartItems();
 
@@ -137,12 +140,13 @@ public class SessionController extends HttpServlet {
         
         return currentCart;
     }
+    //Adds current order to session variable )
 public void setOrder(POrder order)
 {
     session.setAttribute(ORDERINFO, order);
     
 }
-
+//Gets current order from session variable (used for quickly accessing Order details (orderId,status etc)
 public POrder getOrder()
 {
      return (POrder)session.getAttribute(ORDERINFO);
@@ -165,30 +169,35 @@ public POrder getOrder()
             //out.close();
         }
     }
+    //Sets number of confirmed orders in a Session.
     public void setOrderNo(int count){
         session.setAttribute(ORDERNO, count);
     }
+    //Returns the number of confirmed orders in a Session.
     public int getOrderNo(){
         if(session.getAttribute(ORDERNO)==null) {
             return 0;
         }
         return (Integer) session.getAttribute(ORDERNO);
     }
+    //Sets Total amount of current orders (sum of the prices of all the items in current order) in a Session.
     public void setOrderTotal(float amt){
         session.setAttribute(ORDERTOTAL, amt);
     }
+    //Gets the Total amount of current orders (sum of the prices of all the items in current order) in a Session.
     public Float getOrderTotal(){
         return (Float) session.getAttribute(ORDERTOTAL);
     }
-    
+    //Adds a List of all the orders placed/completed  to session.
     public void setOrderList(ArrayList<POrder> ord){
         session.setAttribute(ORDERLIST, ord);
             }
+    //Returns List of all the orders placed/completed in a session.
     public ArrayList<POrder> getOrderList()
     {
         return (ArrayList<POrder>) session.getAttribute(ORDERLIST);
     }
-    
+    // Adds an order to List of orders placed in a session.
     public ArrayList<POrder> addToOrderList(POrder order){
          ArrayList<POrder> currentOrderList = getOrderList();
         if (currentOrderList == null) {
