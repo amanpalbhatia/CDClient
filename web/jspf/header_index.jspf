@@ -1,0 +1,78 @@
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+               
+<script type="text/javascript">
+    function handleSelect(elm)
+{ 
+    window.location = "Internationalise?country="+elm.value.toString().substring(0,2)+"&lang="+elm.value.toString().substring(3,5);
+}
+</script>
+<script>
+    var wel=<%= session.getAttribute("MESSAGES") %>;
+    
+    if (wel==null)
+    {
+        window.location = "Internationalise?country=CD&lang=en";
+        
+    }
+    
+</script>
+ <title><c:out value="${sessionScope.MESSAGES.title}" /></title>
+    </head>
+    <body>
+      
+        <div id="main">
+            <div id="header">
+                  <div id="widgetBar">
+                       <div class="headerWidget">
+                         
+                            <select ONCHANGE="javascript:handleSelect(this)">
+                                <option value="US-en"><c:out value="${sessionScope.MESSAGES.select}" /></option>
+                                <option value="CD-en"><c:out value="${sessionScope.MESSAGES.Canada}" /></option>
+                                <option value="FR-fr"><c:out value="${sessionScope.MESSAGES.France}" /></option>
+                                <option value="CN-zh"><c:out value="${sessionScope.MESSAGES.China}" /></option>
+                             </select>
+                       </div>
+                     
+                       <div class="headerWidget">
+                            <a href="register.jsp">[ <c:out value="${sessionScope.MESSAGES.Register}" /> ]</a>
+                       </div>
+   
+                       <div class="headerWidget">
+                            <a href="cart.jsp" >[ <c:out value="${sessionScope.MESSAGES.View_cart}" /> ]</a>
+                       </div>
+                       <div class="headerWidget">
+                            <a href="OrderServlet" >[ <c:out value="${sessionScope.MESSAGES.Check_Out}" /> ]</a>
+                       </div>
+                        
+                       <div class="headerWidget">
+                            <c:choose>
+                                <c:when test="${sessionScope.USERINFO == null}">
+                           <a href="login.jsp"> [ <c:out value="${sessionScope.MESSAGES.Login}" /> ] </a> 
+                                </c:when>
+                            <c:otherwise>
+                                [ Hi, <c:out value="${sessionScope.USERINFO.fname}"/>]
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+
+                    <a href="#">
+                        <img src="images/logo.png" id="logo" alt="Store Logo">
+                    </a>
+
+                    <div id="logoText">
+                        <c:out value="${sessionScope.MESSAGES.CSI5380}" /> </br></br>
+                        <c:out value="${sessionScope.MESSAGES.Name}" />
+                    </div>
+              </div> 

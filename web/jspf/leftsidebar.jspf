@@ -1,0 +1,32 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!-- Start of content left and right column-->
+            <div id="indexLeftColumn">
+				<p><c:out value="${sessionScope.MESSAGES.PRODUCTS_BY}" />:</p>
+				<ul id="order">
+                                                <li class="categoryBox"> 
+							<span class="categoryLabelText"> 
+                                                        <a href="ProductsByCategory?category=all"> <c:out value="${sessionScope.MESSAGES.All}" /></a>
+                                                        </span>
+						</li>
+
+						<li class="categoryBox"> 
+							<span class="categoryLabelText"> 
+                                                        <a href="ProductsByCategory?category=country"> <c:out value="${sessionScope.MESSAGES.Country}" /> </a>
+                                                        </span>
+						</li>
+                                                <li class="categoryBox"> 
+							<span class="categoryLabelText"> 
+                                                        <a href="ProductsByCategory?category=pop"> <c:out value="${sessionScope.MESSAGES.Pop}" /> </a>
+                                                        </span>
+                                                        
+						</li>
+                                                <li class="categoryBox"> 
+							<span class="categoryLabelText"> 
+                                                        <a href="ProductsByCategory?category=Rock"> <c:out value="${sessionScope.MESSAGES.Rock}" /> </a>
+                                                        </span>
+                                                       
+						</li>
+
+			</div>

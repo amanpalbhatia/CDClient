@@ -1,0 +1,10 @@
+
+        <div id="footer">
+                <hr>
+                <p id="footerText"><c:out value="${sessionScope.MESSAGES.Copyright}" /></p>
+            </div>
+        </div>
+    </body>
+</html>
+
+
