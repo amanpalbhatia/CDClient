@@ -56,7 +56,7 @@ public class SessionController extends HttpServlet {
         return session;
     }
 //This method adds Information(like First Name, Last Name, UserId etc) of a Loggedin (authenticated) user to current Session.
-    public void setLoggedUser(Account userInfo) {
+    public void setLoggedUser(Account userInfo) { 
         session.setAttribute(USERINFO, userInfo);
     }
 //This method returns information (like First Name, Last Name, UserId etc) of a Loggedin (authenticated) user from Session. 
